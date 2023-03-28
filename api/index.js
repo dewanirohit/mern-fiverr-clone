@@ -27,21 +27,12 @@ const connect = async () => {
 	}
 };
 
-const whiteList = [process.env.FRONT_URL];
-
-const corsOptionsDelegate = (req, callback) => {
-	let corsOptions;
-
-	const isDomainAllowed = whiteList.indexOf(req.header("Origin")) !== -1;
-
-	if (isDomainAllowed) corsOptions = { origin: true, credentials: true };
-	else corsOptions = { origin: false };
-
-	callback(null, corsOptions);
-};
-
+app.use((req, res, next) => {
+	res.header("Access-Control-Allow-Credentials", true);
+	next();
+});
 app.use(helmet());
-app.use(cors(corsOptionsDelegate));
+app.use(cors({ origin: process.env.FRONT_URL, credentials: true }));
 app.use(express.json());
 app.use(cookieParser());
 
