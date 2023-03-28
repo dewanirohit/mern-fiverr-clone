@@ -28,7 +28,7 @@ const connect = async () => {
 };
 
 app.use((req, res, next) => {
-	res.header("Access-Control-Allow-Credentials", true);
+	res.header("Access-Control-Allow-Origin", true);
 	next();
 });
 app.use(helmet());
