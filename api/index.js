@@ -27,12 +27,12 @@ const connect = async () => {
 	}
 };
 
-app.use((req, res, next) => {
-	res.header("Access-Control-Allow-Origin", true);
-	next();
-});
 app.use(helmet());
 app.use(cors({ origin: process.env.FRONT_URL, credentials: true }));
+app.use((req, res, next) => {
+	res.header("Access-Control-Allow-Origin");
+	next();
+});
 app.use(express.json());
 app.use(cookieParser());
 
@@ -51,7 +51,7 @@ app.use((err, req, res, next) => {
 	return res.status(errorStatus).send(errorMessage);
 });
 
-app.listen(process.env.PORT || 8800, () => {
+app.listen(process.env.PORT || 5000, () => {
 	connect();
 	console.log("Backend server is running!");
 });
