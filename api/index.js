@@ -26,7 +26,7 @@ const connect = async () => {
 	}
 };
 
-app.use(cors());
+app.use(cors({ origin: process.env.FRONT_URL, credentials: true }));
 app.use(express.json());
 app.use(cookieParser());
 
