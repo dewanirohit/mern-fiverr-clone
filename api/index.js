@@ -6,6 +6,7 @@ dotenv.config();
 
 const cookieParser = require("cookie-parser");
 const cors = require("cors");
+const helmet = require("helmet");
 
 const userRoute = require("./routes/user.routes.js");
 const gigRoute = require("./routes/gig.routes.js");
@@ -26,6 +27,7 @@ const connect = async () => {
 	}
 };
 
+app.use(helmet());
 app.use(cors({ origin: process.env.FRONT_URL, credentials: true }));
 app.use(express.json());
 app.use(cookieParser());
