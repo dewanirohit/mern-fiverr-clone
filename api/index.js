@@ -8,9 +8,6 @@ const cookieParser = require("cookie-parser");
 const cors = require("cors");
 const helmet = require("helmet");
 
-const header = new Headers();
-header.append("Access-Control-Allow-Origin", "*");
-
 const userRoute = require("./routes/user.routes.js");
 const gigRoute = require("./routes/gig.routes.js");
 const orderRoute = require("./routes/order.routes.js");
@@ -30,8 +27,21 @@ const connect = async () => {
 	}
 };
 
+const whiteList = [process.env.FRONT_URL];
+
+const corsOptionsDelegate = (req, callback) => {
+	let corsOptions;
+
+	const isDomainAllowed = whiteList.indexOf(req.header("Origin")) !== -1;
+
+	if (isDomainAllowed) corsOptions = { origin: true, credentials: true };
+	else corsOptions = { origin: false };
+
+	callback(null, corsOptions);
+};
+
 app.use(helmet());
-app.use(cors({ origin: process.env.FRONT_URL, credentials: true }));
+app.use(cors(corsOptionsDelegate));
 app.use(express.json());
 app.use(cookieParser());
 
