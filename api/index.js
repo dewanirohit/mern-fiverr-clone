@@ -8,6 +8,9 @@ const cookieParser = require("cookie-parser");
 const cors = require("cors");
 const helmet = require("helmet");
 
+const header = new Headers();
+header.append("Access-Control-Allow-Origin", "*");
+
 const userRoute = require("./routes/user.routes.js");
 const gigRoute = require("./routes/gig.routes.js");
 const orderRoute = require("./routes/order.routes.js");
